@@ -95,9 +95,7 @@ function Footer() {
       <div className="footer-info">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates<br/><br/></a>
-            &copy; <span id="displayYear"></span> Distributed By
-            <a href="https://themewagon.com/">ThemeWagon</a>
+          <a href="#">Smart Health System<br/><br/></a>
         </p>
       </div>
       </div>

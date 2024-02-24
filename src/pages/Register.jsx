@@ -30,16 +30,19 @@ function Register() {
     e.preventDefault();
     setLoading(true);
     const response = await registerUser({
-      userName: userInput.email,
+      Email: userInput.email,
+      firstName: userInput.firstName,
+      lastName: userInput.lastName,
+      phoneNumber: userInput.phoneNumber,
       password: userInput.password,
       role: userInput.role,
       name: userInput.firstName,
     });
     if (response.data) {
-      toastNotify("Registeration successful! Please login to continue.");
+      //toastNotify("Registeration successful! Please login to continue.");
       navigate("/login");
     } else if (response.error) {
-      toastNotify(response.error.data.errorMessages[0], "error");
+      //toastNotify(response.error.data.errorMessages[0], "error");
     }
 
     setLoading(false);
@@ -125,6 +128,9 @@ function Register() {
                   <div className="btn_box">
                     <button type="submit">Register</button>
                   </div>
+                  <div className="btn_box">
+                       Already have an account! <a href="#" className="ml-1" onClick={()=>navigate("/login")}>Login Here</a>
+                      </div>
                 </form>
               </div>
             </div>

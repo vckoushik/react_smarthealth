@@ -5,7 +5,7 @@ const authApi = createApi({
     reducerPath: "authApi",
 
     baseQuery: fetchBaseQuery({
-      baseUrl: "https://redmangoapi.azurewebsites.net/api/",
+      baseUrl: "https://localhost:7182/api/",
     }),
 
     endpoints: (builder) => ({
