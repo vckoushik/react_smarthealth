@@ -15,10 +15,6 @@ function Search() {
       <div class="s010">
         <SearchResult/>
       </div>
-     
-        
-     
-     
       <Footer />
     </div>
   );

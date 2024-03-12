@@ -5,7 +5,7 @@ export const emptyUserState = {
   id: "",
   email: "",
   role: "",
-};
+}; 
 
 export const userAuthSlice = createSlice({
   name: "userAuth",

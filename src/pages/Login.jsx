@@ -13,7 +13,7 @@ function Login() {
   const dispatch = useDispatch();
   const [loginUser] = useLoginUserMutation();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [userInput, setUserInput] = useState({
     email:"",
     password:"",
@@ -21,7 +21,6 @@ function Login() {
 
   const handleUserInput = (e) => {
     const tempData = inputHelper(e, userInput);
-    
     setUserInput(tempData);
   };
 
@@ -32,7 +31,6 @@ function Login() {
     const response = await loginUser({
         userName : userInput.email,
         password: userInput.password,
-      
     });
 
     if(response.data)

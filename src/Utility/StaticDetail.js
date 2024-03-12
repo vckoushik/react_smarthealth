@@ -3,3 +3,5 @@ export const SD_Roles = {
     PATIENT : "patient",
     DOCTOR : "doctor",
   }
+
+  

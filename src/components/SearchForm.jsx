@@ -1,12 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {  useDispatch } from 'react-redux';
 import MainLoader from "./Loader";
-import { inputHelper } from "../Helper/inputHelper";
+import { useSearchDiseaseMutation } from "../Apis/searchApi";
+import { setUserSearchResponse } from "../redux/userSearchSlice";
 
 function SearchForm() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+    const [searchDisease] = useSearchDiseaseMutation();
     const [userInput, setUserInput] = useState({
       query: "",
       severity: "",
@@ -14,23 +18,35 @@ function SearchForm() {
       isSmoker: "",
       isAlcholic: "",
       age: "",
-      height: 0,
-      weight: 0,
+      height: null,
+      weight: null,
       city:"",
       country:"",
     });
 
     const handleUserInput = (e) => {
-        console.log(e);
-        const tempData = inputHelper(e, userInput);
-        setUserInput(tempData);
+      const { name, value } = e.target;
+      
+      setUserInput({ ...userInput, [name]: value });
     };
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(userInput);
         setLoading(true);
+       
+        const response = await searchDisease(userInput);
+        try{
+          
+          console.log(response);
+          const {disease,treatments,homeRemedies,doctorDepartment,medications,preventionMeasures} = response.data.result;
         
-    
+          dispatch(setUserSearchResponse({disease,treatments,homeRemedies,doctorDepartment,medications,preventionMeasures}));
+        }
+        catch(e){
+          console.log(e);
+        }
+        
         setLoading(false);
       };
     
@@ -52,6 +68,7 @@ function SearchForm() {
     
 
   return (
+    
     <form method="post" onSubmit={handleSubmit}>
      {loading && <MainLoader />}
       <div className="inner-form">
@@ -59,6 +76,7 @@ function SearchForm() {
           <div className="input-field">
             <input
               id="search"
+              name="query"
               type="text"
               value={userInput.query}
               onChange={handleUserInput}
@@ -86,35 +104,35 @@ function SearchForm() {
           <div className="row">
             <div className="input-field">
               <div className="input-select">
-                <select className="form-select" name="choices-single-defaul">
+                <select className="form-select" onChange={handleUserInput} name="severity">
                   <option placeholder="" value="">
                     Severity
                   </option>
-                  <option>Low</option>
-                  <option>Medium</option>
-                  <option>High</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
                 </select>
               </div>
             </div>
             <div className="input-field">
               <div className="input-select">
-                <select className="form-select" name="choices-single-defaul">
+                <select className="form-select" onChange={handleUserInput} name="gender">
                   <option placeholder="" value="">
                     Gender
                   </option>
-                  <option>Male</option>
-                  <option>Female</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
                 </select>
               </div>
             </div>
             <div className="input-field">
               <div className="input-select">
-                <select className="form-select" name="choices-single-defaul">
+                <select className="form-select" onChange={handleUserInput} name="isSmoker">
                   <option placeholder="" value="">
                     IsSmoker
                   </option>
-                  <option>Yes</option>
-                  <option>No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
                 </select>
               </div>
             </div>
@@ -122,26 +140,26 @@ function SearchForm() {
           <div className="row second mb-3">
             <div className="input-field">
               <div className="input-select">
-                <select className="form-select" name="choices-single-defaul">
+                <select className="form-select" onChange={handleUserInput} name="isAlcholic">
                   <option placeholder="" value="">
                     IsAlcholic
                   </option>
-                  <option>Yes</option>
-                  <option>No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
                 </select>
               </div>
             </div>
             <div className="input-field">
               <div className="input-select">
-                <select className="form-select" name="choices-single-defaul">
+                <select className="form-select" onChange={handleUserInput} name="age">
                   <option placeholder="" value="">
                     Age
                   </option>
                   <option value={"0-10"}>0-10</option>
-                  <option>11-20</option>
-                  <option>21-40</option>
-                  <option>41-60</option>
-                  <option>61+</option>
+                  <option value={"11-20"}>11-20</option>
+                  <option value={"21-40"}>21-40</option>
+                  <option value={"41-60"}>41-60</option>
+                  <option value={"61+"}>61+</option>
                 </select>
               </div>
             </div>
@@ -149,6 +167,7 @@ function SearchForm() {
               <div className="">
                 <input
                   type="number"
+                  name="height"
                   className="form-control"
                   placeholder="Height(cm)"
                   value={userInput.height}
@@ -162,6 +181,7 @@ function SearchForm() {
               <div className="">
                 <input
                   type="number"
+                  name="weight"
                   className="form-control"
                   placeholder="Weight(Kg)"
                   value={userInput.weight}
@@ -176,6 +196,7 @@ function SearchForm() {
                   type="text"
                   className="form-control"
                   placeholder="City"
+                  name="city"
                   value={userInput.city}
                  onChange={handleUserInput}
                 ></input>
@@ -187,6 +208,7 @@ function SearchForm() {
                   type="text"
                   className="form-control"
                   placeholder="Country"
+                  name="country"
                   value={userInput.country}
                   onChange={handleUserInput}
                 ></input>
