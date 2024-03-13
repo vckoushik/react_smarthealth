@@ -21,9 +21,30 @@ const searchApi = createApi({
         }),
       }),
 
+      getMedicines: builder.query({
+        query: (pageNumber ) => ({
+          url: `medicines/GetMedicines?pageNumber=${pageNumber}`, // Include the pageNumber in the query URL
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+          },
+        }),
+        
+        searchMedicines: builder.query({
+          query: (searchQuery) => ({
+            url: `medicines/SearchMedicine?query=${searchQuery}`, // Include the pageNumber in the query URL
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+            },
+          }),
+      }),
+
+
+      }),
     }),
   });
   
-  export const { useSearchDiseaseMutation } = searchApi;
+  export const { useSearchDiseaseMutation, useGetMedicinesQuery , useSearchMedicinesQuery } = searchApi;
   export default searchApi;
   

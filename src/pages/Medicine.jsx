@@ -1,8 +1,47 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useGetMedicinesQuery } from "../Apis/searchApi";
+import { useState, useEffect } from "react";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import { searchMedicines } from "../Apis/AxiosApi";
+
 
 export default function Medicine() {
+  const [medicines, setMedicines] = useState([]);
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useGetMedicinesQuery(page);
+  const [searchQuery, setSearchQuery] = useState("");
+ 
+
+  useEffect(() => {
+    if (data && data.isSuccess) {
+      setMedicines((prevMedicines) => [...prevMedicines, ...data.result]);
+    }
+  }, [data]);
+
+  const handleViewMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const handleSearchQuery = (e) => {
+    setSearchQuery(e.target.value);
+  };
+  
+  const handleSearch= async()=>{
+    console.log(searchQuery);
+    const response = await searchMedicines(searchQuery);
+    if(response.isSuccess == true){
+      setMedicines(response.result);
+    }
+    console.log(response);
+  }
+  const handleReset = ()=>{
+    setMedicines([]); // Reset medicines state to an empty array
+    setPage(1); // Reset page state to its initial value
+    setSearchQuery(''); 
+  }
   return (
     <div>
       <Header />
@@ -16,62 +55,92 @@ export default function Medicine() {
                 medications
               </p>
             </div>
-            <div classNameName="row">
+            <div className="row">
+              <div className="col-10">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search for a medicine..."
+                    onChange={handleSearchQuery}
+                  />
+                </div>
+              </div>
+              <div className="col-1">
+                <button className="btn btn-success" onClick={handleSearch} >Search</button>
+              </div>
+              <div className="col-1">
+                <button className="btn btn-warning" onClick={handleReset} >Reset</button>
+              </div>
+            </div>
+            <div className="row">
               <div className="col-12">
                 <table className="table table-bordered">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Medicine Name</th>
-                      <th scope="col">Company</th>
-                      <th scope="col">Price</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Medicine 1</td>
-                      <td>Company 1</td>
-                      <td>2.846</td>
-                      <td>
-                        <button type="button" className="btn btn-primary">
-                          <i className="far fa-eye"></i>
-                        </button>
-                        
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Medicine 2</td>
-                      <td>Company 2</td>
-                      <td>3.417</td>
-                      <td>
-                        <button type="button" className="btn btn-primary">
-                          <i className="far fa-eye"></i>
-                        </button>
-                        
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Medicine 3</td>
-                      <td>Company 3</td>
-                      <td>1.234</td>
-                      <td>
-                        <button type="button" className="btn btn-primary">
-                          <i className="far fa-eye"></i>
-                        </button>
-                        
-                      </td>
-                    </tr>
+                    {medicines &&
+                      medicines.map((M, index) => (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <td>{M.name}</td>
+                          <td>
+                            <Popup
+                              trigger={
+                                <button
+                                  type="button"
+                                  className="btn btn-primary"
+                                >
+                                  <i className="far fa-eye"></i>
+                                </button>
+                              }
+                              position="right center"
+                              style={{ width: "400px", height: "300px" }}
+                              modal
+                              nested
+                            >
+                              {(close) => (
+                                <div
+                                  className="jumbotron"
+                                  style={{ height: '800px', width: "100%",  position: "relative", overflowY:"scroll"}}
+                                >
+                                  <div className="content" >
+                                    <h1>Medicine Details</h1>
+                                    <hr/>
+                                    <h5><strong>Id: </strong>{M.id}</h5>
+                                    <h5><strong>Name: </strong> {M.name}</h5>
+                                    <p><strong>Precautions: </strong> {M.precaution}</p>
+                                    <p><strong>Dose: </strong> {M.dose}</p>
+                                    <p><strong>Mode of Action: </strong> {M.modeOfAction}</p>
+                                    <p><strong>Side Effect: </strong> {M.sideEffect}</p>
+                                    <p><strong>Interaction: </strong> {M.interaction}</p>
+                                  </div>
+                                  <div>
+                                    <button className="btn btn-danger" onClick={() => close()}>
+                                      Close
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                            </Popup>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
             </div>
 
-            <div className="btn-box">
-              <a href="">View All</a>
+            <div
+              onClick={handleViewMore}
+              className="btn btn-success text-center"
+            >
+              View More
             </div>
           </div>
         </div>

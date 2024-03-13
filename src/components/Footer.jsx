@@ -1,6 +1,7 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom';
 function Footer() {
+  const navigate = useNavigate();
   return (
     <footer className="footer_section">
     <div className="container">
@@ -62,19 +63,19 @@ function Footer() {
               Links
             </h4>
             <div className="footer_links">
-              <a className="" href="#">
+              <a className="" href="#" onClick={() => navigate("/")}>
                 Home
               </a>
-              <a className="" href="#">
+              <a className="" href="#" onClick={() => navigate("/about")} >
                 About
               </a>
-              <a className="" href="#">
+              <a className="" href="#" onClick={() => navigate("/departments")}>
                 Departments
               </a>
-              <a className="active" href="#">
+              <a className="active" href="#"  onClick={() => navigate("/doctors")}>
                 Doctors
               </a>
-              <a className="" href="#">
+              <a className="" href="#" onClick={() => navigate("/contact")}>
                 Contact Us
               </a>
             </div>

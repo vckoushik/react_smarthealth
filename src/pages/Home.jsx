@@ -41,6 +41,9 @@ function Home() {
                 <a className="nav-link" href="#" onClick={() => navigate("/doctors")}>Doctors</a>
               </li>
               <li className="nav-item">
+                <a className="nav-link" href="#" onClick={() => navigate("/medicine")}>Medicines</a>
+              </li>
+              <li className="nav-item">
                 <a className="nav-link" href="#" onClick={() => navigate("/contact")}>Contact Us</a>
               </li>
               <form className="form-inline">
