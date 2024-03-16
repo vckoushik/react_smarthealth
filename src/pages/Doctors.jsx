@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { getDoctors, searchDoctors } from "../Apis/AxiosApi";
+import withAuth from "../Utility/withAuth";
 
 function Doctors() {
   const [doctors, setDoctors] = useState([]);
@@ -111,4 +112,4 @@ function Doctors() {
   );
 }
 
-export default Doctors;
+export default withAuth(Doctors);

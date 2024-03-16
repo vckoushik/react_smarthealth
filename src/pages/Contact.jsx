@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import withAuth from "../Utility/withAuth";
 
 function Contact() {
   return (
@@ -58,4 +59,4 @@ function Contact() {
   );
 }
 
-export default Contact;
+export default withAuth(Contact);

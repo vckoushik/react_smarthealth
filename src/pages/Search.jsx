@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SearchForm from "../components/SearchForm";
 import SearchResult from "../components/SearchResult";
+import withAuth from "../Utility/withAuth";
 
 function Search() {
   return (
@@ -20,4 +21,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default withAuth(Search);

@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import withAuth from "../Utility/withAuth";
 
 function About() {
   return (
@@ -41,4 +42,4 @@ function About() {
   );
 }
 
-export default About;
+export default withAuth(About);

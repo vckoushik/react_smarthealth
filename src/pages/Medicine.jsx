@@ -6,9 +6,10 @@ import { useState, useEffect } from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { searchMedicines } from "../Apis/AxiosApi";
+import withAuth from "../Utility/withAuth";
 
 
-export default function Medicine() {
+function Medicine() {
   const [medicines, setMedicines] = useState([]);
   const [page, setPage] = useState(1);
   const { data, isLoading } = useGetMedicinesQuery(page);
@@ -38,8 +39,8 @@ export default function Medicine() {
     console.log(response);
   }
   const handleReset = ()=>{
-    setMedicines([]); // Reset medicines state to an empty array
-    setPage(1); // Reset page state to its initial value
+    setMedicines([]); 
+    setPage(1); 
     setSearchQuery(''); 
   }
   return (
@@ -149,3 +150,5 @@ export default function Medicine() {
     </div>
   );
 }
+
+export default withAuth(Medicine);

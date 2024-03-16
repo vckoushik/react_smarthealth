@@ -13,7 +13,7 @@ function Login() {
   const dispatch = useDispatch();
   const [loginUser] = useLoginUserMutation();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     email:"",
     password:"",

@@ -1,8 +1,20 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom';
 import Footer from '../components/Footer';
+import withAuth from '../Utility/withAuth';
+
+import { useDispatch } from 'react-redux';
+import { setLoggedInUser, emptyUserState} from '../redux/userAuthSlice';
 function Home() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(setLoggedInUser({ ...emptyUserState }));
+    navigate("/login");
+  };
+
   return (
     <div>
 
@@ -44,7 +56,7 @@ function Home() {
                 <a className="nav-link" href="#" onClick={() => navigate("/medicine")}>Medicines</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#" onClick={() => navigate("/contact")}>Contact Us</a>
+                <a className="nav-link" href="#" onClick={handleLogout}>Logout</a>
               </li>
               <form className="form-inline">
                 <button className="btn  my-2 my-sm-0 nav_search-btn" >
@@ -362,4 +374,4 @@ function Home() {
   )
 }
 
-export default Home
+export default withAuth(Home);

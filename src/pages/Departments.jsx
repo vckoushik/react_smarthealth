@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { getDepartments } from "../Apis/AxiosApi";
+import withAuth from "../Utility/withAuth";
 
 function Departments() {
   const [departments, setDepartments] = useState([]);
@@ -58,4 +59,4 @@ function Departments() {
   );
 }
 
-export default Departments;
+export default withAuth(Departments);
