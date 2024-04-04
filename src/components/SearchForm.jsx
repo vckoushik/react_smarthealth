@@ -5,9 +5,8 @@ import {  useDispatch } from 'react-redux';
 import MainLoader from "./Loader";
 import { useSearchDiseaseMutation } from "../Apis/searchApi";
 import { setUserSearchResponse } from "../redux/userSearchSlice";
-
+import {toast} from "react-toastify";
 function SearchForm() {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [searchDisease] = useSearchDiseaseMutation();
@@ -34,7 +33,12 @@ function SearchForm() {
         e.preventDefault();
         console.log(userInput);
         setLoading(true);
-       
+        const nameRegex = /^[a-zA-Z ]*$/; // Only alphabets and spaces allowed
+    
+        if (!nameRegex.test(userInput.query)) {
+          setLoading(false);
+          return toast.error("Symptoms should only contain alphabets and spaces.");
+        }
         const response = await searchDisease(userInput);
         try{
           
@@ -44,7 +48,7 @@ function SearchForm() {
           dispatch(setUserSearchResponse({disease,treatments,homeRemedies,doctorDepartment,medications,preventionMeasures}));
         }
         catch(e){
-          console.log(e);
+          toast.error("Invalid Details provided try again.");
         }
         
         setLoading(false);

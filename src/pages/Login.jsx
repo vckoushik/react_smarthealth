@@ -7,6 +7,7 @@ import { useLoginUserMutation } from '../Apis/authApi';
 import { useNavigate } from 'react-router-dom';
 import {  useDispatch } from 'react-redux';
 import { setLoggedInUser } from '../redux/userAuthSlice';
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
@@ -37,18 +38,22 @@ function Login() {
     {
       try{
         const { token } = response.data.result;
-        const {firstName,lastName,id,email,phoneNumber,role} = response.data.result.userDto;
+        const {firstName,lastName,id,email,role} = response.data.result.userDto;
         localStorage.setItem("token", token);
         const fullName =  firstName+" "+lastName;
         dispatch(setLoggedInUser({fullName , id, email,role }));
+        toast.success("Login Successful");
         navigate("/");
       }
       catch(ex){
-        setError(response.data.message);
+        setLoading(false);
+        toast.error("Unable to login, Enter valid credentials");
+        setError(ex);
       }
       
     }else{
-      setError(response.data.message);
+      setLoading(false);
+      setError("Unable to login");
     }
 
     setLoading(false);
@@ -68,10 +73,10 @@ function Login() {
                   <div className="form_container contact-form">
                     <form method="post" onSubmit={handleSubmit}>
                       <div>
-                        <input type="email" name="email" value={userInput.email} onChange={handleUserInput} placeholder="Email" />
+                        <input type="email" required name="email" value={userInput.email} onChange={handleUserInput} placeholder="Email" />
                       </div>
                       <div>
-                        <input type="password" name="password" value={userInput.password} onChange={handleUserInput} placeholder="password"/>
+                        <input type="password" required name="password" value={userInput.password} onChange={handleUserInput} placeholder="password"/>
                       </div>
                       <div className="btn_box">
                         <button type="submit">Log In</button>

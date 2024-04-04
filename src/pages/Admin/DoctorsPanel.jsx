@@ -1,47 +1,54 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { getDoctors, searchDoctors } from "../Apis/AxiosApi";
-import withAuth from "../Utility/withAuth";
-import {toast} from "react-toastify";
-function Doctors() {
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import { getDoctors, searchDoctors } from "../../Apis/AxiosApi";
+import withAdmin from "../../Utility/withAdmin";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDeleteDoctorMutation } from "../../Apis/searchApi";
+
+function DoctorsPanel() {
+  const navigate = useNavigate();
   const [doctors, setDoctors] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [deleteDoctor] = useDeleteDoctorMutation();
+  const handleDelete= async (id)=>{
+    try {
+      await deleteDoctor(id);
+      toast.success("Doctor Deleted Successfully");
+      navigate("/doctor-panel/")
+    } catch (error) {
+      toast.error("Error encountered while deleting doctor"+error);
+    }
+  }
+
 
   async function fetchMyAPI() {
     const data = await getDoctors();
-    console.log(data);
     if (data && data.isSuccess) {
       setDoctors(data.result);
-      console.log(doctors);
     }
   }
 
   useEffect(() => {
     fetchMyAPI();
-  }, []);
+  }, [doctors]);
 
   const handleSearchQuery = (e) => {
     setSearchQuery(e.target.value);
   };
 
   const handleSearch = async () => {
-
-    const nameRegex = /^[a-zA-Z ]*$/; // Only alphabets and spaces allowed
-    if(searchQuery === ''){
-      return toast.error("Enter a valid name.");
-    }
-    if (!nameRegex.test(searchQuery)) {
-      return toast.error("Names should only contain alphabets and spaces.");
-    }
+    console.log(searchQuery);
     const response = await searchDoctors(searchQuery);
-    if(response.isSuccess === true){
+    if (response.isSuccess === true) {
       setDoctors(response.result);
     }
+    console.log(response);
   };
   const handleReset = () => {
-    setDoctors([]); 
-    setSearchQuery('');
+    setDoctors([]);
+    setSearchQuery("");
     fetchMyAPI();
   };
 
@@ -59,7 +66,7 @@ function Doctors() {
               relationships.
             </p>
           </div>
-          <br/>
+          <br />
           <div className="row">
             <div className="col-10">
               <div className="form-group">
@@ -68,7 +75,6 @@ function Doctors() {
                   className="form-control"
                   placeholder="Search for a doctor..."
                   onChange={handleSearchQuery}
-                
                 />
               </div>
             </div>
@@ -82,6 +88,9 @@ function Doctors() {
                 Reset
               </button>
             </div>
+          </div>
+          <div className="row">
+            <button className="btn btn-primary col-4"  onClick={() => navigate("/doctor/doctorupsert")}>Add new doctor</button>
           </div>
           <div className="row">
             {doctors &&
@@ -103,6 +112,12 @@ function Doctors() {
                       <h6 className="">
                         {Doc.state} {Doc.country}
                       </h6>
+                      <button type="button" className="btn btn-warning" onClick={()=>navigate("/doctor/doctorupsert/" + Doc.id)}>
+                        <i className="fa-solid fa-edit"></i>
+                      </button>
+                      <button type="button" className="btn btn-danger m-1"  onClick={()=>{handleDelete(Doc.id)}}>
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -119,4 +134,4 @@ function Doctors() {
   );
 }
 
-export default withAuth(Doctors);
+export default withAdmin(DoctorsPanel);

@@ -4,9 +4,9 @@ import { useRegisterUserMutation } from "../Apis/authApi";
 import { useState } from "react";
 import { inputHelper } from "../Helper/inputHelper";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {SD_Roles} from "../Utility/StaticDetail.js";
 import MainLoader from "../components/Loader.jsx";
-import toastNotify from "../Helper/toastHelper.js";
 
 function Register() {
   const [registerUser] = useRegisterUserMutation();
@@ -29,6 +29,21 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+      // Regular expressions for validation
+      const phoneNumberRegex = /^\d+$/; // Only digits allowed
+      const nameRegex = /^[a-zA-Z ]*$/; // Only alphabets and spaces allowed
+    
+      // Validation checks
+      if (!phoneNumberRegex.test(userInput.phoneNumber)) {
+        setLoading(false);
+        return toast.error("Phone number should only contain digits.");
+      }
+    
+      if (!nameRegex.test(userInput.firstName) || !nameRegex.test(userInput.lastName)) {
+        setLoading(false);
+        return toast.error("Names should only contain alphabets and spaces.");
+      }
+
     const response = await registerUser({
       Email: userInput.email,
       firstName: userInput.firstName,
@@ -39,10 +54,11 @@ function Register() {
       name: userInput.firstName,
     });
     if (response.data) {
-      //toastNotify("Registeration successful! Please login to continue.");
+      toast.success("Registeration successful! Please login to continue.");
       navigate("/login");
     } else if (response.error) {
-      //toastNotify(response.error.data.errorMessages[0], "error");
+      console.log(response);
+      toast.error(response.error.data.message);
     }
 
     setLoading(false);
@@ -68,6 +84,7 @@ function Register() {
                           value={userInput.firstName}
                           onChange={handleUserInput}
                           placeholder="First Name"
+                          required
                         />
                       </div>
                     </div>
@@ -79,6 +96,7 @@ function Register() {
                           value={userInput.lastName}
                           onChange={handleUserInput}
                           placeholder="Last Name"
+                          required
                         />
                       </div>
                     </div>
@@ -90,6 +108,7 @@ function Register() {
                       value={userInput.phoneNumber}
                       onChange={handleUserInput}
                       placeholder="Phone Number"
+                      required
                     />
                   </div>
                   <div>
@@ -99,6 +118,7 @@ function Register() {
                       value={userInput.email}
                       onChange={handleUserInput}
                       placeholder="Email"
+                      required
                     />
                   </div>
                   <div>
@@ -108,6 +128,7 @@ function Register() {
                       value={userInput.password}
                       onChange={handleUserInput}
                       placeholder="Enter your password"
+                      required
                     />
                   </div>
                   <div>

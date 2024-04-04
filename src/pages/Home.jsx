@@ -2,7 +2,6 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom';
 import Footer from '../components/Footer';
 import withAuth from '../Utility/withAuth';
-
 import { useDispatch } from 'react-redux';
 import { setLoggedInUser, emptyUserState} from '../redux/userAuthSlice';
 function Home() {
