@@ -4,4 +4,7 @@ export const SD_Roles = {
     DOCTOR : "DOCTOR",
   }
 
+  export const Appointment_Status = [ "", "Pending","Approved","Cancelled","Completed"]
+
+
   

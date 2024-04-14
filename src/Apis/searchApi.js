@@ -98,6 +98,30 @@ const searchApi = createApi({
           }),
         }),
 
+        /*Appointment APIs */
+        /* DOCTOR APIS */
+
+        getAppointmentId: builder.query({
+          query: (id) => ({
+            url: `appointment/GetById/${id}`,
+          }),
+          providesTags: ["Medicines"],
+        }),
+        getPatientAppointmentId: builder.query({
+          query: (id) => ({
+            url: `appointment/GetPaitentAppointments/${id}`,
+          }),
+          providesTags: ["Medicines"],
+        }),
+        createAppointment: builder.mutation({
+          query: (data) => ({
+            url: "appointment/createappointment/",
+            method: "POST",
+            body: data,
+          }),
+          invalidatesTags: ["Appointments"],
+        }),
+
   }),
 });
 
@@ -113,5 +137,8 @@ export const {
   useCreateDoctorMutation,
   useUpdateDoctorMutation,
   useDeleteDoctorMutation,
+  useGetAppointmentIdQuery,
+  useGetPatientAppointmentIdQuery,
+  useCreateAppointmentMutation
 } = searchApi;
 export default searchApi;

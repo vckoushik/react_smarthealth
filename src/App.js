@@ -13,8 +13,24 @@ import MedicinePanel from "./pages/Admin/MedicinePanel";
 import DoctorsPanel from "./pages/Admin/DoctorsPanel";
 import MedicineUpsert from "./pages/Admin/MedicineUpsert";
 import DoctorUpsert from "./pages/Admin/DoctorUpsert";
+import Appointment from "./pages/Appointment";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+import { setLoggedInUser } from "./redux/userAuthSlice";
+import AppointmentsList from "./pages/AppointmentsList";
 
 function App() {
+  const dispatch =useDispatch();
+  useEffect(() => {
+    const localToken = localStorage.getItem("token");
+    if (localToken) {
+      const { name, id, email, role } = jwtDecode(localToken);
+      var fullName = name;
+      dispatch(setLoggedInUser({ fullName, id, email, role }));
+    }
+  }, []);
+
   return (
     <div className="App">
       <Routes>
@@ -44,6 +60,14 @@ function App() {
           <Route
             path="/doctor/doctorupsert"
             element={<DoctorUpsert />}
+          />
+          <Route
+            path="/appointment/schedule/:id"
+            element={<Appointment />}
+          />
+          <Route
+            path="/appointments"
+            element={<AppointmentsList />}
           />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

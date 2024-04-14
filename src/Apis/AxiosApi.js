@@ -57,3 +57,30 @@ export const searchMedicines = async (searchQuery) => {
       throw error; // Optionally rethrow the error to handle it elsewhere
     }
   };
+
+  export const gettimeslots = async (date) => {
+    try {
+      const response = await axios.get(baseUrl+`appointment/time-slots?selectedDate=${date}`, {
+        headers: {
+          "Content-type": "application/json",
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error retrieving timeslots:", error);
+      throw error; // Optionally rethrow the error to handle it elsewhere
+    }
+  };
+    export const getDoctorById = async (id) => {
+      try {
+        const response = await axios.get(baseUrl+`doctor/GetById/${id}`, {
+          headers: {
+            "Content-type": "application/json",
+          }
+        });
+        return response.data;
+      } catch (error) {
+        console.error("Error retrieving doctors:", error);
+        throw error; // Optionally rethrow the error to handle it elsewhere
+      }
+  };

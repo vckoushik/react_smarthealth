@@ -4,8 +4,10 @@ import Footer from "../components/Footer";
 import { getDoctors, searchDoctors } from "../Apis/AxiosApi";
 import withAuth from "../Utility/withAuth";
 import {toast} from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function Doctors() {
   const [doctors, setDoctors] = useState([]);
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
   async function fetchMyAPI() {
@@ -95,7 +97,7 @@ function Doctors() {
                       />
                     </div>
                     <div className="detail-box">
-                      <div className="social_box">Book Appointment</div>
+                      <div className="social_box"  onClick={() => navigate("/appointment/schedule/"+Doc.id)}>Book Appointment</div>
                       <h5>
                         <strong>{Doc.name}</strong>
                       </h5>
