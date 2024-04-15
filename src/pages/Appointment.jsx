@@ -15,7 +15,7 @@ const appointmentData = {
     startTime:"",
     endTime:"",
     userId:"",
-    status: 1,
+    status: 0,
     doctorId:""
   }
 

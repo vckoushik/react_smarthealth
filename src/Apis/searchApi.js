@@ -99,25 +99,51 @@ const searchApi = createApi({
         }),
 
         /*Appointment APIs */
-        /* DOCTOR APIS */
+        getAppointments: builder.query({
+          query: () => ({
+            url: `appointment/GetAppointments/`,
+          }),
+          providesTags: ["Appointments"],
+        }),
 
         getAppointmentId: builder.query({
           query: (id) => ({
             url: `appointment/GetById/${id}`,
           }),
-          providesTags: ["Medicines"],
+          providesTags: ["Appointments"],
         }),
         getPatientAppointmentId: builder.query({
           query: (id) => ({
             url: `appointment/GetPaitentAppointments/${id}`,
           }),
-          providesTags: ["Medicines"],
+          providesTags: ["Appointments"],
         }),
         createAppointment: builder.mutation({
           query: (data) => ({
             url: "appointment/createappointment/",
             method: "POST",
             body: data,
+          }),
+          invalidatesTags: ["Appointments"],
+        }),
+        cancelAppointment: builder.mutation({
+          query: (id) => ({
+            url: `appointment/cancelAppointment/${id}`,
+            method: "PUT"
+          }),
+          invalidatesTags: ["Appointments"],
+        }),
+        approveAppointment: builder.mutation({
+          query: (id) => ({
+            url: `appointment/approveAppointment/${id}`,
+            method: "PUT"
+          }),
+          invalidatesTags: ["Appointments"],
+        }),
+        completeAppointment: builder.mutation({
+          query: (id) => ({
+            url: `appointment/completeAppointment/${id}`,
+            method: "PUT"
           }),
           invalidatesTags: ["Appointments"],
         }),
@@ -137,8 +163,12 @@ export const {
   useCreateDoctorMutation,
   useUpdateDoctorMutation,
   useDeleteDoctorMutation,
+  useGetAppointmentsQuery,
   useGetAppointmentIdQuery,
   useGetPatientAppointmentIdQuery,
-  useCreateAppointmentMutation
+  useCreateAppointmentMutation,
+  useApproveAppointmentMutation,
+  useCancelAppointmentMutation,
+  useCompleteAppointmentMutation
 } = searchApi;
 export default searchApi;

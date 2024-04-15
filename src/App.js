@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { setLoggedInUser } from "./redux/userAuthSlice";
 import AppointmentsList from "./pages/AppointmentsList";
+import AppointmentsPanel from "./pages/Admin/AppointmentsPanel";
 
 function App() {
   const dispatch =useDispatch();
@@ -68,6 +69,10 @@ function App() {
           <Route
             path="/appointments"
             element={<AppointmentsList />}
+          />
+          <Route
+            path="/appointments-panel"
+            element={<AppointmentsPanel />}
           />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
