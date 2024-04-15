@@ -7,6 +7,7 @@ import "reactjs-popup/dist/index.css";
 import { useGetDoctorByIdQuery, useGetPatientAppointmentIdQuery } from '../Apis/searchApi';
 import { Appointment_Status } from '../Utility/StaticDetail';
 import { getDoctorById } from '../Apis/AxiosApi';
+import withAuth from '../Utility/withAuth';
 
 
 function AppointmentsList() {
@@ -95,4 +96,4 @@ function AppointmentsList() {
   )
 }
 
-export default AppointmentsList
+export default withAuth(AppointmentsList);

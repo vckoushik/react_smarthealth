@@ -127,6 +127,9 @@ function Header() {
                   <a className="dropdown-item" href="#" onClick={()=>navigate("/appointments")}>
                     Appointments
                   </a>
+                  {userData.role.toUpperCase() === SD_Roles.DOCTOR  && <a className="dropdown-item" href="#" onClick={()=>navigate("/appointments-panel")}>
+                    Appointments Panel
+                  </a>}
                 </div>
               </li>)
                 

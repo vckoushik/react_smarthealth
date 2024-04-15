@@ -20,6 +20,8 @@ import { jwtDecode } from "jwt-decode";
 import { setLoggedInUser } from "./redux/userAuthSlice";
 import AppointmentsList from "./pages/AppointmentsList";
 import AppointmentsPanel from "./pages/Admin/AppointmentsPanel";
+import MedicalRecords from "./pages/MedicalRecords";
+import MedicalRecordsPanel from "./pages/Admin/MedicalRecordsPanel";
 
 function App() {
   const dispatch =useDispatch();
@@ -73,6 +75,14 @@ function App() {
           <Route
             path="/appointments-panel"
             element={<AppointmentsPanel />}
+          />
+          <Route
+            path="/medicalrecords"
+            element={<MedicalRecords />}
+          />
+          <Route
+            path="/medicalrecords-panel"
+            element={<MedicalRecordsPanel />}
           />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

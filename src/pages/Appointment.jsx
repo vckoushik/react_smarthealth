@@ -8,6 +8,7 @@ import { gettimeslots } from '../Apis/AxiosApi';
 import { useSelector } from "react-redux";
 import { useCreateAppointmentMutation } from '../Apis/searchApi';
 import { useNavigate } from "react-router-dom";
+import withAuth from '../Utility/withAuth';
 
 const appointmentData = {
     title:"",
@@ -146,4 +147,4 @@ function Appointment() {
   )
 }
 
-export default Appointment;
+export default withAuth(Appointment);

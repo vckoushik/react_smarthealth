@@ -7,6 +7,8 @@ import "reactjs-popup/dist/index.css";
 import { useGetAppointmentsQuery,useApproveAppointmentMutation,useCancelAppointmentMutation,useCompleteAppointmentMutation } from "../../Apis/searchApi";
 import { Appointment_Status } from "../../Utility/StaticDetail";
 import {toast} from "react-toastify";
+import withAdmin from "../../Utility/withAdmin";
+import withDoctor from "../../Utility/withDoctor";
 function AppointmentsPanel() {
   const [appointments, setAppointments] = useState([]);
   const userdata = useSelector((state) => state.userAuthStore);
@@ -111,4 +113,4 @@ function AppointmentsPanel() {
   );
 }
 
-export default AppointmentsPanel;
+export default withDoctor(AppointmentsPanel);

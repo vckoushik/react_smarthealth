@@ -6,7 +6,7 @@ const withDoctor = (WrappedComponent) => {
     const accessToken = localStorage.getItem("token") ?? "";
     if (accessToken) {
       const decode = jwtDecode(accessToken);
-      if (decode.role !== SD_Roles.DOCTOR) {
+      if (decode.role === SD_Roles.PATIENT) {
         window.location.replace("/accessDenied");
         return null;
       }
