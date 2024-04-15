@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = "https://localhost:7182/api/";
+const baseUrl = "https://smart-health-001-7e72a5e2a7a1.herokuapp.com/api/";
 
 export const searchMedicines = async (searchQuery) => {
     try {

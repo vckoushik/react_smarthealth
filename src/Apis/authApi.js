@@ -5,7 +5,7 @@ const authApi = createApi({
     reducerPath: "authApi",
 
     baseQuery: fetchBaseQuery({
-      baseUrl: "https://localhost:7182/api/",
+      baseUrl: "https://smart-health-001-7e72a5e2a7a1.herokuapp.com/api/",
     }),
 
     endpoints: (builder) => ({
