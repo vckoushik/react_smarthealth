@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/react_smarthealth/static/css/main.db493ad9.css",
+    "main.js": "/react_smarthealth/static/js/main.17b23291.js",
+    "index.html": "/react_smarthealth/index.html",
+    "main.db493ad9.css.map": "/react_smarthealth/static/css/main.db493ad9.css.map",
+    "main.17b23291.js.map": "/react_smarthealth/static/js/main.17b23291.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db493ad9.css",
+    "static/js/main.17b23291.js"
+  ]
+}
