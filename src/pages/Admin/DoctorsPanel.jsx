@@ -27,12 +27,12 @@ function DoctorsPanel() {
     const data = await getDoctors();
     if (data && data.isSuccess) {
       setDoctors(data.result);
-    }
+    } 
   }
 
   useEffect(() => {
     fetchMyAPI();
-  }, [doctors]);
+  }, []);
 
   const handleSearchQuery = (e) => {
     setSearchQuery(e.target.value);

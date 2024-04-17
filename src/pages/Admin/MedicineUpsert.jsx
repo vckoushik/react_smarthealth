@@ -63,7 +63,8 @@ function MedicineUpsert() {
 
     if (id) {
       //update
-      response = await updateMedicine({ medicineInput, id });
+      console.log(medicineInput);
+      response = await updateMedicine({id: id,data:medicineInput});
       toast.success("Medicine Updated Successfully");
     } else {
       //create
@@ -91,6 +92,7 @@ function MedicineUpsert() {
               <div className="form_container contact-form">
                 <form method="post" onSubmit={handleSubmit}>
                   <div>
+                    <label for="name">Name</label>
                     <input
                       type="text"
                       required
@@ -101,6 +103,7 @@ function MedicineUpsert() {
                     />
                   </div>
                   <div>
+                  <label for="precaution">Precaution</label>
                     <input
                       type="text"
                       required
@@ -111,6 +114,7 @@ function MedicineUpsert() {
                     />
                   </div>
                   <div>
+                  <label for="indication">Indication</label>
                     <input
                       type="text"
                       required
@@ -121,6 +125,7 @@ function MedicineUpsert() {
                     />
                   </div>
                   <div>
+                  <label for="indication">Contra Indication</label>
                     <input
                       type="text"
                       required
@@ -131,6 +136,7 @@ function MedicineUpsert() {
                     />
                   </div>
                   <div>
+                  <label for="dose">Dose</label>
                     <input
                       type="text"
                       required
@@ -141,6 +147,7 @@ function MedicineUpsert() {
                     />
                   </div>
                   <div>
+                  <label for="sideEffect">Side Effect</label>
                     <input
                       type="text"
                       required
@@ -150,6 +157,7 @@ function MedicineUpsert() {
                       onChange={handleMedicineInput}
                     />
                   </div>
+                  <label for="modeOfAction">Mode of Action</label>
                   <div>
                     <input
                       type="text"
@@ -161,6 +169,7 @@ function MedicineUpsert() {
                     />
                   </div>
                   <div>
+                  <label for="interaction">Interaction</label>
                     <input
                       type="text"
                       required

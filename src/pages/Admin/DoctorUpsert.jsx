@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header';
 import MainLoader from '../../components/Loader';
 import Footer from '../../components/Footer';
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCreateDoctorMutation, useUpdateDoctorMutation } from '../../Apis/searchApi';
+import { useCreateDoctorMutation, useGetDoctorByIdQuery, useUpdateDoctorMutation } from '../../Apis/searchApi';
 const doctorData = {
   name: "",
   departmentId: "",
@@ -19,6 +19,21 @@ function DoctorUpsert() {
   const [updateDoctor] = useUpdateDoctorMutation();
   const [loading,setLoading] = useState(false);
   const [doctorInput, setDoctorInput] = useState(doctorData);
+  const { data } = useGetDoctorByIdQuery(id);
+
+  useEffect(() => {
+    if (data && data.result) {
+      const tempData = {
+        name: data.result.name,
+        departmentId: data.result.departmentId,
+        state: data.result.state,
+        country: data.result.country,
+        userId:data.result.userId,
+      };
+      setDoctorInput(tempData);
+    }
+  }, [data]);
+
   const handleDoctorInput = (e) => {
     const { name, value } = e.target;
 
@@ -27,19 +42,19 @@ function DoctorUpsert() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
 
     let response;
 
     try {
       if (id) {
           // Update
-          response = await updateDoctor({ doctorInput, id });
+         
+          response = await updateDoctor({ data:doctorInput, id:id });
           toast.success("Doctor Updated Successfully");
       } else {
           // Create
           response = await createDoctor(doctorInput);
-          toast.success("Doctor created successfully");
+          toast.success("Doctor Created successfully");
       }
   } catch (error) {
       // Handle errors
@@ -103,6 +118,16 @@ function DoctorUpsert() {
                     name="country"
                     value={doctorInput.country}
                     placeholder="Country"
+                    onChange={handleDoctorInput}
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    required
+                    name="userId"
+                    value={doctorInput.userId}
+                    placeholder="UserId"
                     onChange={handleDoctorInput}
                   />
                 </div>

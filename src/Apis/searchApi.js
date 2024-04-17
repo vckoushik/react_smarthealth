@@ -4,7 +4,7 @@ const searchApi = createApi({
   reducerPath: "searchApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://smart-health-001-7e72a5e2a7a1.herokuapp.com/api/",
+    baseUrl: "https://localhost:7182/api/",
   }),
 
   endpoints: (builder) => ({
@@ -33,12 +33,17 @@ const searchApi = createApi({
       invalidatesTags: ["Medicines"],
     }),
     updateMedicine: builder.mutation({
-      query: ({ data, id }) => ({
+      query: (args) => {
+        const {data,id} = args;
+        return {
         url: "medicines/updatemedicine/" + id,
         method: "PUT",
-        body: data,
-      }),
-      invalidatesTags: ["Medicines"],
+        body: JSON.stringify(data), // Serialize data to JSON string
+        headers: {
+          "Content-Type": "application/json", // Set content type to JSON
+        }
+      };
+    }
     }),
     deleteMedicine: builder.mutation({
       query: (id) => ({
@@ -84,12 +89,17 @@ const searchApi = createApi({
           invalidatesTags: ["Doctors"],
         }),
         updateDoctor: builder.mutation({
-          query: ({ data, id }) => ({
+          query: (args) => {
+            const {data,id} = args;
+            return {
             url: "doctor/updatedoctor/" + id,
             method: "PUT",
-            body: data,
-          }),
-          invalidatesTags: ["Doctors"],
+            body: JSON.stringify(data), // Serialize data to JSON string
+            headers: {
+              "Content-Type": "application/json", // Set content type to JSON
+            }
+          };
+        }
         }),
         deleteDoctor: builder.mutation({
           query: (id) => ({
