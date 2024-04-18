@@ -83,7 +83,7 @@ function App() {
           <Route
             path="/medicalrecords-panel"
             element={<MedicalRecordsPanel />}
-          />
+          />        
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>

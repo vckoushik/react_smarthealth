@@ -99,8 +99,8 @@ function Header() {
                   <a className="dropdown-item" href="#" onClick={()=>navigate("/medicine-panel")}>
                     Medicines Panel
                   </a>
-                  <a className="dropdown-item" href="#" onClick={()=>navigate("/records-panel")}>
-                    Medicial Records
+                  <a className="dropdown-item" href="#" onClick={()=>navigate("/medicalrecords-panel")}>
+                    Medicial Records Panel
                   </a>
                   <div className="dropdown-divider"></div>
                   <a className="dropdown-item" href="#" onClick={()=>navigate("/appointments-panel")}>
@@ -120,8 +120,8 @@ function Header() {
                   More
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="#" onClick={()=>navigate("/records")}>
-                    Medicial Records
+                  <a className="dropdown-item" href="#" onClick={()=>navigate("/medicalrecords")}>
+                   My Medicial Records
                   </a>
                   <div className="dropdown-divider"></div>
                   <a className="dropdown-item" href="#" onClick={()=>navigate("/appointments")}>
