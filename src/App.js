@@ -22,6 +22,7 @@ import AppointmentsList from "./pages/AppointmentsList";
 import AppointmentsPanel from "./pages/Admin/AppointmentsPanel";
 import MedicalRecords from "./pages/MedicalRecords";
 import MedicalRecordsPanel from "./pages/Admin/MedicalRecordsPanel";
+import MedicalRecordUpsert from "./pages/Admin/MedicalRecordUpsert";
 
 function App() {
   const dispatch =useDispatch();
@@ -79,6 +80,10 @@ function App() {
           <Route
             path="/medicalrecords"
             element={<MedicalRecords />}
+          />
+          <Route
+            path="/medicalrecord/medicalrecordupsert"
+            element={<MedicalRecordUpsert />}
           />
           <Route
             path="/medicalrecords-panel"

@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const baseUrl = "https://smart-health-001-7e72a5e2a7a1.herokuapp.com/api/";
+import { backendUrl } from '../Utility/StaticDetail';
+const baseUrl = backendUrl;
 
 export const searchMedicines = async (searchQuery) => {
     try {
@@ -44,6 +44,43 @@ export const searchMedicines = async (searchQuery) => {
     }
   };
 
+  export const getMedicalRecords = async () => {
+    try {
+      const response = await axios.get(baseUrl+`medicalRecords/GetRecords`, {
+        headers: {
+          "Content-type": "application/json",
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error searching medical records:", error);
+      throw error; // Optionally rethrow the error to handle it elsewhere
+    }
+  };
+  export const getMedicalRecordsByUserId = async (id) => {
+    try {
+      const response = await axios.get(baseUrl+`MedicalRecords/GetRecordByUserId/${id}`, {
+        headers: {
+          "Content-type": "application/json",
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error searching medical records:", error);
+      throw error; // Optionally rethrow the error to handle it elsewhere
+    }
+  };
+  export const downloadMedicalRecord= async (id) => {
+    try {
+      const response = await axios.get(baseUrl+`MedicalRecords/Download/${id}`, {
+          responseType: 'arraybuffer',
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error searching medical records:", error);
+      throw error; // Optionally rethrow the error to handle it elsewhere
+    }
+  };
   export const getDepartments = async () => {
     try {
       const response = await axios.get(baseUrl+`department/GetDepartments`, {

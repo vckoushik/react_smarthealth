@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { backendUrl } from "../Utility/StaticDetail";
 
 const searchApi = createApi({
   reducerPath: "searchApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://smart-health-001-7e72a5e2a7a1.herokuapp.com/api/",
+    baseUrl: backendUrl,
   }),
 
   endpoints: (builder) => ({
@@ -158,6 +159,28 @@ const searchApi = createApi({
           invalidatesTags: ["Appointments"],
         }),
 
+        /*medical Record APIs */
+        getMedicalRecords: builder.query({
+          query: () => ({
+            url: `medicalrecords/GetRecords/`,
+          }),
+          providesTags: ["MedicalRecords"],
+        }),
+        deleteMedicalRecord: builder.mutation({
+          query: (id) => ({
+            url: `medicalrecords/DeleteRecord/${id}`,
+            method: "DELETE",
+          }),
+        }),
+        createMedicalRecord: builder.mutation({
+          query: (data) => ({
+            url: "MedicalRecords",
+            method: "POST",
+            body: data,
+          }),
+          invalidatesTags: ["Medical Record"],
+        }),
+
   }),
 });
 
@@ -179,6 +202,9 @@ export const {
   useCreateAppointmentMutation,
   useApproveAppointmentMutation,
   useCancelAppointmentMutation,
-  useCompleteAppointmentMutation
+  useCompleteAppointmentMutation,
+  useGetMedicalRecordsQuery,
+  useDeleteMedicalRecordMutation,
+  useCreateMedicalRecordMutation
 } = searchApi;
 export default searchApi;

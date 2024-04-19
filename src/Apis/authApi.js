@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+import { backendUrl } from "../Utility/StaticDetail";
 const authApi = createApi({
 
     reducerPath: "authApi",
 
     baseQuery: fetchBaseQuery({
-      baseUrl: "https://smart-health-001-7e72a5e2a7a1.herokuapp.com/api/",
+      baseUrl: backendUrl,
     }),
 
     endpoints: (builder) => ({

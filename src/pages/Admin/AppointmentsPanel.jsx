@@ -24,8 +24,6 @@ function AppointmentsPanel() {
 
   const handleStatus=async(id,status)=>{
     try{
-        console.log(id);
-        console.log(status);
         switch (status) {
             case "CANCEL":
               await cancelAppointment(id);
