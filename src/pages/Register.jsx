@@ -142,7 +142,6 @@ function Register() {
                       <option value="">--Select Role--</option>
                       <option value={`${SD_Roles.PATIENT}`}>Patient</option>
                       <option value={`${SD_Roles.DOCTOR}`}>Doctor</option>
-                      <option value={`${SD_Roles.ADMIN}`}>Admin</option>
                     </select>
                   </div>
                   <div className="mt-5"></div>
