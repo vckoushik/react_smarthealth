@@ -46,7 +46,7 @@ function MedicalRecords() {
             <div className="heading_container heading_center">
               <h2>Medical Records</h2>
               <p>
-                Medical Records Admin Page
+                Medical Records Page
               </p>
             </div>
 

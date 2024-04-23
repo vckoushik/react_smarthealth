@@ -7,6 +7,8 @@ import { useNavigate} from "react-router-dom";
 import {
   useCreateMedicalRecordMutation,
 } from "../../Apis/searchApi";
+import { useSelector } from "react-redux";
+import { SD_Roles } from "../../Utility/StaticDetail";
 
 const medicalRecordData = {
   Name: "",
@@ -15,14 +17,21 @@ const medicalRecordData = {
   UserId: "",
 };
 
+
 function MedicalRecordUpsert() {
 
   const navigate = useNavigate();
   const [createMedicalRecord] = useCreateMedicalRecordMutation();
   const [loading, setLoading] = useState(false);
   const [medicalRecordInput, setMedicalRecordInput] = useState(medicalRecordData);
-  
 
+  const userdata = useSelector((state)=>state.userAuthStore);
+
+  useEffect(()=>{
+    if(userdata.role == 'patient'){
+      medicalRecordData.UserId = userdata.id;
+    }
+  },[])
 
   const handleMedicalRecordInput = (e) => {
     const { name, value,files } = e.target;
@@ -59,7 +68,11 @@ function MedicalRecordUpsert() {
   
     if (response) {
       setLoading(false);
-      navigate("/medicalrecords-panel");
+      if(userdata.role == 'patient'){
+        navigate("/medicalrecords");
+      }
+      else
+        navigate("/medicalrecords-panel");
     }
     setLoading(false);
   };
@@ -78,6 +91,7 @@ function MedicalRecordUpsert() {
               <div className="form_container contact-form">
                 <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
                   <div>
+                    <label>Name</label>
                     <input
                       type="text"
                       required
@@ -87,6 +101,7 @@ function MedicalRecordUpsert() {
                     />
                   </div>
                   <div>
+                  <label>Description</label>
                     <input
                       type="text"
                       required
@@ -96,6 +111,7 @@ function MedicalRecordUpsert() {
                     />
                   </div>
                   <div>
+                  <label>Choose a File</label>
                     <input
                       type="file"
                       required
@@ -104,12 +120,15 @@ function MedicalRecordUpsert() {
                     />
                   </div>
                   <div>
+                    <label>User Id</label>
                     <input
                       type="text"
                       required
                       name="UserId"
                       placeholder="User ID"
+                      value={(userdata.role === 'patient' ? userdata.id : '')}
                       onChange={handleMedicalRecordInput}
+                      disabled={userdata.role === 'patient'}
                     />
                   </div>
                   <div className="btn_box">
